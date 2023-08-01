@@ -1,5 +1,5 @@
 module "docker_o11y_logs_aggregator_pipeline" {
-  source = "./modules/pipeline_docker_deploy"
+  source = "./modules/pipeline_docker"
 
   project_name             = "docker-o11y-logs-aggregator"
   codecommit_repo_name     = "docker-o11y-logs-aggregator"

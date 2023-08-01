@@ -1,5 +1,5 @@
 module "docker_monitoring_opentelemetry_pipeline" {
-  source = "./modules/pipeline_docker_deploy"
+  source = "./modules/pipeline_docker"
 
   project_name             = "docker-monitoring-opentelemetry"
   codecommit_repo_name     = "docker-monitoring-opentelemetry"

@@ -7,11 +7,11 @@ resource "aws_codebuild_project" "docker_build" {
   source {
     type = "CODEPIPELINE"
     buildspec = templatefile(
-      "./templates/buildspec/build_docker_deploy.yaml.tpl", {
-        aws_account_id = data.aws_caller_identity.current.account_id
-        ecr_repo_name  = var.ecr_repo_name
-        cluster_name   = var.cluster_name
-        service_name   = var.service_name
+      "./templates/buildspec/build_docker.yaml.tpl", {
+        aws_account_id      = data.aws_caller_identity.current.account_id
+        docker_sercrets_arn = var.docker_sercrets_arn
+        ecr_repo_name       = var.ecr_repo_name
+        deploy_script       = var.deploy_script
     })
   }
 
@@ -64,8 +64,9 @@ resource "aws_codepipeline" "codebuild_docker_deploy_pipeline" {
       version          = "1"
       output_artifacts = ["SourceArtifact"]
       configuration = {
-        RepositoryName = var.codecommit_repo_name
-        BranchName     = "master"
+        RepositoryName       = var.codecommit_repo_name
+        BranchName           = "master"
+        PollForSourceChanges = false
       }
       region    = var.region
       namespace = "SourceVariables"
@@ -117,6 +118,7 @@ resource "aws_iam_role" "build_role" {
         aws_account_id       = data.aws_caller_identity.current.account_id
         artifacts_bucket_arn = var.artifacts_bucket_arn
         build_project_name   = "${var.project_name}-build"
+        docker_sercrets_arn  = var.docker_sercrets_arn
     })
   }
 

@@ -1,5 +1,5 @@
 module "docker_o11y_otel_4_yace_pipeline" {
-  source = "./modules/pipeline_docker_deploy"
+  source = "./modules/pipeline_docker"
 
   project_name             = "docker-o11y-otel-4-yace"
   codecommit_repo_name     = "docker-o11y-otel-4-yace"

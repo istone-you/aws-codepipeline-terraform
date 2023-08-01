@@ -1,5 +1,5 @@
 module "docker_monitoring_firelens_pipeline" {
-  source = "./modules/pipeline_docker_deploy"
+  source = "./modules/pipeline_docker"
 
   project_name             = "docker-monitoring-firelens"
   codecommit_repo_name     = "docker-monitoring-firelens"

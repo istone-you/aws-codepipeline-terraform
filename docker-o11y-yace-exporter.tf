@@ -1,5 +1,5 @@
 module "docker_o11y_yace_exporter_pipeline" {
-  source = "./modules/pipeline_docker_deploy"
+  source = "./modules/pipeline_docker"
 
   project_name             = "docker-o11y-yace-exporter"
   codecommit_repo_name     = "docker-o11y-yace-exporter"
