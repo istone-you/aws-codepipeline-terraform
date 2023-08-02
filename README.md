@@ -61,9 +61,6 @@ CodeCommit リポジトリへのプッシュをトリガーに [Serverless Frame
 
   ```
   environment_variables = {
-    SERVERLESS_DEPLOY_BUCKET_NAME = {
-      value = var.serverless_deploy_bucket_name
-    },
     variables1 = {
       value = "hoge"
     },
@@ -72,3 +69,13 @@ CodeCommit リポジトリへのプッシュをトリガーに [Serverless Frame
     }
   }
   ```
+
+### pipeline_file
+
+CodeCommit リポジトリへのプッシュをトリガーにファイルを S3 に作成する CodePipeline を作成するモジュールです。下記値を指定してください。
+
+- project_name = プロジェクト名
+- codecommit_repo_name = CodeCommit のレポジトリ名
+- bucket_name = デプロイするバケット名
+- extract = デプロイするファイルを解凍するかどうか
+- object_key = 解凍しない場合は圧縮後のファイル名、解凍する場合はファイルを格納するパスを指定

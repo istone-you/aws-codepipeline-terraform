@@ -12,4 +12,6 @@ variable "ansible_playbook_bucket_name" {}
 
 variable "serverless_deploy_bucket_name" {}
 
+variable "file_deploy_bucket_name" {}
+
 data "aws_caller_identity" "current" {}
