@@ -107,7 +107,7 @@ resource "aws_cloudwatch_event_rule" "event_rule" {
 
 resource "aws_cloudwatch_event_target" "event_target" {
   rule     = aws_cloudwatch_event_rule.event_rule.name
-  arn      = aws_codepipeline.codebuild_serverless_framework_pipeline.arn
+  arn      = aws_codepipeline.serverless_framework_pipeline.arn
   role_arn = aws_iam_role.event_role.arn
 }
 
