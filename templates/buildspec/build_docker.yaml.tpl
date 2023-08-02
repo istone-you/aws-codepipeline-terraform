@@ -8,7 +8,7 @@ env:
 phases:
   pre_build:
     commands:
-    - echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
+      - echo $DOCKERHUB_PASS | docker login -u $DOCKERHUB_USER --password-stdin
   build:
     commands:
       - docker build -t ${ecr_repo_name} .
