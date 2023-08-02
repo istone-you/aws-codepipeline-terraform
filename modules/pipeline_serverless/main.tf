@@ -97,6 +97,20 @@ resource "aws_codepipeline" "codebuild_serverless_framework_pipeline" {
   }
 }
 
+resource "aws_cloudwatch_event_rule" "event_rule" {
+  name = "${var.project_name}-rule"
+
+  event_pattern = templatefile("./templates/event_pattern/event_pattern.json.tpl", {
+    codecommit_arn : "arn:aws:codecommit:ap-northeast-1:${data.aws_caller_identity.current.account_id}:${var.codecommit_repo_name}"
+  })
+}
+
+resource "aws_cloudwatch_event_target" "event_target" {
+  rule     = aws_cloudwatch_event_rule.event_rule.name
+  arn      = aws_codepipeline.codebuild_serverless_framework_pipeline.arn
+  role_arn = aws_iam_role.event_role.arn
+}
+
 resource "aws_iam_role" "build_role" {
   name = "${var.project_name}-build-role"
   assume_role_policy = jsonencode({
@@ -159,4 +173,21 @@ resource "aws_iam_role" "pipeline_role" {
   tags = {
     Name = "${var.project_name}-pipeline-role"
   }
+}
+
+resource "aws_iam_role" "event_role" {
+  name = "${var.project_name}-event-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "events.amazonaws.com"
+        }
+      }
+    ]
+  })
+  managed_policy_arns = ["arn:aws:iam::aws:policy/AWSCodePipeline_FullAccess"]
 }
