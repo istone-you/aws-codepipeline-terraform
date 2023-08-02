@@ -35,17 +35,24 @@ secret_key = "****************"
 
 ### pipeline_ansible
 
+既出の pipeline ディレクトリとは別物です。aws-codepipeline-prod 以外の Terraform ファイル用の CodePipeline を作成するモジュールです。下記値を指定してください。
+
+- project_name = プロジェクト名
+- codecommit_repo_name = CodeCommit のレポジトリ名
+
+### pipeline_ansible
+
 CodeCommit リポジトリへのプッシュをトリガーに [Ansible Playbook](https://www.ansible.com/) の Zip ファイルを S3 に作成する CodePipeline を作成するモジュールです。下記値を指定してください。
 
 - project_name = プロジェクト名
-- codecommit_repo_name = Ansible Playbook をプッシュしている CodeCommit のレポジトリ名
+- codecommit_repo_name = CodeCommit のレポジトリ名
 
 ### pipeline_docker
 
 CodeCommit リポジトリへのプッシュをトリガーに [Docker](https://www.docker.com/) イメージを作成し、そのイメージを ECR にプッシュする CodePipeline を作成するモジュールです。下記値を指定してください。
 
 - project_name = プロジェクト名
-- codecommit_repo_name = Packer の実行ファイルをプッシュしている CodeCommit のレポジトリ名
+- codecommit_repo_name = CodeCommit のレポジトリ名
 - ecr_repo_name = ECR のレポジトリ名
 - deploy_script = デプロイ時のスクリプト
 
