@@ -12,8 +12,6 @@
 
 Terraform Cloud の Variables に下記変数を指定してください。
 
-- access_key = AWS のアクセスキー
-- secret_key = AWS のシークレットキー
 - region = AWS のリージョン
 - artifacts_bucket_name = pipeline ディレクトリで作成した S3 バケットの名前
 - artifacts_bucket_key_arn = pipeline ディレクトリで作成した KMS の ARN
@@ -23,6 +21,13 @@ Terraform Cloud の Variables に下記変数を指定してください。
 - file_deploy_bucket_name = ファイルのデプロイ用 S3 バケット
 
 Systems Manager パラメータストアの**ACCESS_KEY_ID**と**SECRET_ACCESS_KEY**にアクセスキーとシークレットキーを格納しておいてください。
+
+また、**terraform plan**コマンドを実行するためにはローカルに**terraform.tfvars**を用意して、**access_key**と**secret_key**を記載する必要があります。
+
+```
+access_key = "****************"
+secret_key = "****************"
+```
 
 ## Modules の解説
 
