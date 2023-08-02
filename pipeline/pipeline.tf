@@ -1,6 +1,6 @@
 
 resource "aws_codebuild_project" "terraform_build" {
-  name          = "terraform-build"
+  name          = "${var.codecommit_repo_name}-build"
   service_role  = aws_iam_role.build_role.arn
   build_timeout = 60
 
@@ -33,13 +33,13 @@ resource "aws_codebuild_project" "terraform_build" {
   encryption_key = aws_kms_key.artifacts_bucket_key.arn
 
   tags = {
-    Name = "terraform-build"
+    Name = "${var.codecommit_repo_name}-build"
   }
 }
 
 
 resource "aws_codepipeline" "codebuild_terraform_pipeline" {
-  name     = "terraform-pipeline"
+  name     = "${var.codecommit_repo_name}-pipeline"
   role_arn = aws_iam_role.pipeline_role.arn
 
   artifact_store {
@@ -79,7 +79,7 @@ resource "aws_codepipeline" "codebuild_terraform_pipeline" {
       version         = "1"
       input_artifacts = ["SourceArtifact"]
       configuration = {
-        ProjectName = "terraform-build"
+        ProjectName = "${var.codecommit_repo_name}-build"
       }
       region    = var.region
       namespace = "Build"
@@ -89,7 +89,7 @@ resource "aws_codepipeline" "codebuild_terraform_pipeline" {
 }
 
 resource "aws_iam_role" "build_role" {
-  name = "terraform-build-role"
+  name = "${var.codecommit_repo_name}-build-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -107,12 +107,12 @@ resource "aws_iam_role" "build_role" {
   managed_policy_arns = ["arn:aws:iam::aws:policy/AdministratorAccess"]
 
   tags = {
-    Name = "terraform-build-role"
+    Name = "${var.codecommit_repo_name}-build-role"
   }
 }
 
 resource "aws_iam_role" "pipeline_role" {
-  name = "terraform-pipeline-role"
+  name = "${var.codecommit_repo_name}-pipeline-role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -139,6 +139,6 @@ resource "aws_iam_role" "pipeline_role" {
   }
 
   tags = {
-    Name = "terraform-pipeline-role"
+    Name = "${var.codecommit_repo_name}-pipeline-role"
   }
 }
