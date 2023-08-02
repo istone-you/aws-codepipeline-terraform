@@ -19,8 +19,11 @@ variable "artifacts_bucket_key_arn" {
   type = string
 }
 
-variable "ansible_playbook_bucket_name" {
-  type = string
+variable "environment_variables" {
+  type = map(object({
+    value = string
+    type  = optional(string)
+  }))
 }
 
 data "aws_caller_identity" "current" {}

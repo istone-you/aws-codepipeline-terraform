@@ -1,15 +1,12 @@
 
-resource "aws_codebuild_project" "ansible_playbook_build" {
+resource "aws_codebuild_project" "serverless_framework_build" {
   name          = "${var.project_name}-build"
   service_role  = aws_iam_role.build_role.arn
   build_timeout = 60
 
   source {
-    type = "CODEPIPELINE"
-    buildspec = templatefile("./templates/buildspec/build_ansible.yaml.tpl", {
-      project_name                 = var.project_name
-      ansible_playbook_bucket_name = var.ansible_playbook_bucket_name
-    })
+    type      = "CODEPIPELINE"
+    buildspec = templatefile("./templates/buildspec/build_serverless.yaml.tpl", {})
   }
 
   artifacts {
@@ -26,6 +23,15 @@ resource "aws_codebuild_project" "ansible_playbook_build" {
     image                       = "aws/codebuild/amazonlinux2-x86_64-standard:4.0"
     image_pull_credentials_type = "CODEBUILD"
     privileged_mode             = false
+
+    dynamic "environment_variable" {
+      for_each = var.environment_variables
+      content {
+        name  = environment_variable.key
+        value = environment_variable.value.value
+        type  = environment_variable.value.type
+      }
+    }
   }
 
   logs_config {
@@ -41,7 +47,7 @@ resource "aws_codebuild_project" "ansible_playbook_build" {
 }
 
 
-resource "aws_codepipeline" "codebuild_ansible_playbook_pipeline" {
+resource "aws_codepipeline" "codebuild_serverless_framework_pipeline" {
   name     = "${var.project_name}-pipeline"
   role_arn = aws_iam_role.pipeline_role.arn
 
@@ -111,11 +117,10 @@ resource "aws_iam_role" "build_role" {
     name = "codebuild_policy"
 
     policy = templatefile(
-      "./templates/iam_policy/policy_build_ansible.json.tpl", {
-        aws_account_id               = data.aws_caller_identity.current.account_id
-        artifacts_bucket             = var.artifacts_bucket
-        build_project_name           = "${var.project_name}-build"
-        ansible_playbook_bucket_name = var.ansible_playbook_bucket_name
+      "./templates/iam_policy/policy_build_serverless.json.tpl", {
+        aws_account_id     = data.aws_caller_identity.current.account_id
+        artifacts_bucket   = var.artifacts_bucket
+        build_project_name = "${var.project_name}-build"
     })
   }
 
@@ -146,7 +151,7 @@ resource "aws_iam_role" "pipeline_role" {
       "./templates/iam_policy/policy_pipeline.json.tpl", {
         aws_account_id       = data.aws_caller_identity.current.account_id
         artifacts_bucket     = var.artifacts_bucket
-        build_project_arn    = aws_codebuild_project.ansible_playbook_build.arn
+        build_project_arn    = aws_codebuild_project.serverless_framework_build.arn
         codecommit_repo_name = var.codecommit_repo_name
     })
   }

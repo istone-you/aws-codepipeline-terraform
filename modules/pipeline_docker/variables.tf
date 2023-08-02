@@ -31,8 +31,4 @@ variable "docker_sercrets_arn" {
   type = string
 }
 
-variable "managed_policy_arns" {
-  type = set(string)
-}
-
 data "aws_caller_identity" "current" {}

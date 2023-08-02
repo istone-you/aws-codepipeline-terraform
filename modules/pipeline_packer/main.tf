@@ -115,7 +115,9 @@ resource "aws_iam_role" "build_role" {
     })
   }
 
-  managed_policy_arns = var.managed_policy_arns
+  managed_policy_arns = [
+    "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+  ]
 
   tags = {
     Name = "${var.project_name}-build-role"

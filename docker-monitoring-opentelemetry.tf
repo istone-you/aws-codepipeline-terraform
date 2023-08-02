@@ -9,9 +9,6 @@ module "docker_monitoring_opentelemetry_pipeline" {
   artifacts_bucket         = aws_s3_bucket.artifacts_bucket.bucket
   artifacts_bucket_key_arn = aws_kms_key.artifacts_bucket_key.arn
   docker_sercrets_arn      = var.docker_sercrets_arn
-  managed_policy_arns = [
-    "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryFullAccess"
-  ]
 }
 
 
