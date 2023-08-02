@@ -171,6 +171,5 @@ resource "aws_iam_role" "event_role" {
       }
     ]
   })
-
   managed_policy_arns = ["arn:aws:iam::aws:policy/AWSDataPipeline_FullAccess"]
 }
