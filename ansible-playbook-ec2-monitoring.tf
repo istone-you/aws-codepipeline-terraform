@@ -4,7 +4,7 @@ module "ansible_playbook_ec2_monitoring_pipeline" {
   project_name                 = "ansible-playbook-ec2-monitoring"
   codecommit_repo_name         = "ansible-playbook-ec2-monitoring"
   region                       = var.region
-  artifacts_bucket             = aws_s3_bucket.artifacts_bucket.bucket
-  artifacts_bucket_key_arn     = aws_kms_key.artifacts_bucket_key.arn
+  artifacts_bucket             = var.artifacts_bucket_name
+  artifacts_bucket_key_arn     = var.artifacts_bucket_key_arn
   ansible_playbook_bucket_name = var.ansible_playbook_bucket_name
 }

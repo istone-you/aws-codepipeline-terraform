@@ -17,7 +17,7 @@ resource "aws_kms_key" "artifacts_bucket_key" {
   })
   key_usage = "ENCRYPT_DECRYPT"
   tags = {
-    Name = "s3-artifact-key"
+    Name = var.artifacts_bucket_key_name
   }
 }
 

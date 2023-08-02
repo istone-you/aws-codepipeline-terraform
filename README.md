@@ -1,22 +1,36 @@
 # CodePipeline 用の Terraform
 
-## Variables
+## pipeline ディレクトリで Terraform 実行してパイプラインを作成
+
+本 Terraform ファイル用の CodePipeline です。
+
+予めこのディレクトリ内で**terraform apply**を実行して、パイプラインを作成しておいてください。
+
+※ルートディレクトリでの Terraform 実行で、このディレクトリ内の Terraform が実行されることはありません。
+
+## Variables の設定
 
 Terraform Cloud の Variables に下記変数を指定してください。
 
 - access_key = AWS のアクセスキー
 - secret_key = AWS のシークレットキー
 - region = AWS のリージョン
+- artifacts_bucket_name = pipeline ディレクトリで作成した S3 バケットの名前
+- artifacts_bucket_key_arn = pipeline ディレクトリで作成した KMS の ARN
 - docker_sercrets_arn = Docker Hub のアカウント情報が記載された Secrets Manager の Arn
 - ansible_playbook_bucket_name = Ansible Playbook を格納する S3 バケット
+- serverless_deploy_bucket_name = Serverless Framework のデプロイ用 S3 バケット
+- file_deploy_bucket_name = ファイルのデプロイ用 S3 バケット
 
 Systems Manager パラメータストアの**ACCESS_KEY_ID**と**SECRET_ACCESS_KEY**にアクセスキーとシークレットキーを格納しておいてください。
 
-## Modules
+## Modules の解説
+
+各モジュールについて説明します。
 
 ### pipeline_ansible
 
-CodeCommit リポジトリへのプッシュをトリガーに [Ansible Playbook](https://www.ansible.com/) の Zip ファイル S3 に作成する CodePipeline を作成するモジュールです。下記値を指定してください。
+CodeCommit リポジトリへのプッシュをトリガーに [Ansible Playbook](https://www.ansible.com/) の Zip ファイルを S3 に作成する CodePipeline を作成するモジュールです。下記値を指定してください。
 
 - project_name = プロジェクト名
 - codecommit_repo_name = Ansible Playbook をプッシュしている CodeCommit のレポジトリ名

@@ -1,8 +1,8 @@
 resource "aws_s3_bucket" "artifacts_bucket" {
-  bucket = "flogic-pipeline-artifacts"
+  bucket = var.artifacts_bucket_name
 
   tags = {
-    Name = "flogic-pipeline-artifacts"
+    Name = var.artifacts_bucket_name
   }
 }
 

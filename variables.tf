@@ -6,6 +6,10 @@ variable "region" {
   default = "ap-northeast-1"
 }
 
+variable "artifacts_bucket_name" {}
+
+variable "artifacts_bucket_key_arn" {}
+
 variable "docker_sercrets_arn" {}
 
 variable "ansible_playbook_bucket_name" {}
