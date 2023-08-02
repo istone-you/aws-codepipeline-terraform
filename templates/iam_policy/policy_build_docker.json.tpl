@@ -16,7 +16,7 @@
     {
       "Effect": "Allow",
       "Resource": [
-        "${artifacts_bucket_arn}/*"
+        "arn:aws:s3:::${artifacts_bucket}/*"
       ],
       "Action": [
         "s3:PutObject",

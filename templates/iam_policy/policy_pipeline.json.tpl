@@ -13,8 +13,8 @@
         "s3:Abort*"
       ],
       "Resource": [
-        "${artifacts_bucket_arn}",
-        "${artifacts_bucket_arn}/*"
+        "arn:aws:s3:::${artifacts_bucket}",
+        "arn:aws:s3:::${artifacts_bucket}/*"
       ]
     },
     {
@@ -27,7 +27,7 @@
         "kms:ReEncrypt*",
         "kms:GenerateDataKey*"
       ],
-      "Resource": "${artifacts_bucket_arn}"
+      "Resource": "arn:aws:s3:::${artifacts_bucket}"
     },
     {
       "Sid": "CodeBuildProjects",

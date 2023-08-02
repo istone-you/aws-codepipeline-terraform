@@ -16,7 +16,8 @@
     {
       "Effect": "Allow",
       "Resource": [
-        "arn:aws:s3:::${artifacts_bucket}/*"
+        "arn:aws:s3:::${artifacts_bucket}/*",
+        "arn:aws:s3:::${ansible_playbook_bucket_name}/*"
       ],
       "Action": [
         "s3:PutObject",
@@ -37,15 +38,6 @@
       ],
       "Resource": [
         "arn:aws:codebuild:ap-northeast-1:${aws_account_id}:report-group/${build_project_name}-*"
-      ]
-    },
-    {
-      "Effect": "Allow",
-      "Action": [
-        "ssm:GetParameters"
-      ],
-      "Resource": [
-        "*"
       ]
     }
   ]

@@ -23,10 +23,6 @@ variable "artifacts_bucket" {
   type = string
 }
 
-variable "artifacts_bucket_arn" {
-  type = string
-}
-
 variable "artifacts_bucket_key_arn" {
   type = string
 }

@@ -19,6 +19,10 @@ variable "artifacts_bucket_key_arn" {
   type = string
 }
 
+variable "ansible_playbook_bucket_name" {
+  type = string
+}
+
 variable "managed_policy_arns" {
   type = set(string)
 }

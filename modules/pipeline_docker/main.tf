@@ -115,10 +115,10 @@ resource "aws_iam_role" "build_role" {
 
     policy = templatefile(
       "./templates/iam_policy/policy_build_docker.json.tpl", {
-        aws_account_id       = data.aws_caller_identity.current.account_id
-        artifacts_bucket_arn = var.artifacts_bucket_arn
-        build_project_name   = "${var.project_name}-build"
-        docker_sercrets_arn  = var.docker_sercrets_arn
+        aws_account_id      = data.aws_caller_identity.current.account_id
+        artifacts_bucket    = var.artifacts_bucket
+        build_project_name  = "${var.project_name}-build"
+        docker_sercrets_arn = var.docker_sercrets_arn
     })
   }
 
@@ -150,7 +150,7 @@ resource "aws_iam_role" "pipeline_role" {
     policy = templatefile(
       "./templates/iam_policy/policy_pipeline.json.tpl", {
         aws_account_id       = data.aws_caller_identity.current.account_id
-        artifacts_bucket_arn = var.artifacts_bucket_arn
+        artifacts_bucket     = var.artifacts_bucket
         build_project_arn    = aws_codebuild_project.docker_build.arn
         codecommit_repo_name = var.codecommit_repo_name
     })

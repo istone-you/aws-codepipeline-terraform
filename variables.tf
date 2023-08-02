@@ -8,4 +8,6 @@ variable "region" {
 
 variable "docker_sercrets_arn" {}
 
+variable "ansible_playbook_bucket_name" {}
+
 data "aws_caller_identity" "current" {}

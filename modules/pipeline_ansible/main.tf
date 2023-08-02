@@ -1,12 +1,15 @@
 
-resource "aws_codebuild_project" "packer_build" {
+resource "aws_codebuild_project" "ansible_playbook_build" {
   name          = "${var.project_name}-build"
   service_role  = aws_iam_role.build_role.arn
   build_timeout = 60
 
   source {
-    type      = "CODEPIPELINE"
-    buildspec = templatefile("./templates/buildspec/build_packer.yaml.tpl", {})
+    type = "CODEPIPELINE"
+    buildspec = templatefile("./templates/buildspec/build_ansible.yaml.tpl", {
+      project_name                 = var.project_name
+      ansible_playbook_bucket_name = var.ansible_playbook_bucket_name
+    })
   }
 
   artifacts {
@@ -38,7 +41,7 @@ resource "aws_codebuild_project" "packer_build" {
 }
 
 
-resource "aws_codepipeline" "codebuild_packer_deploy_pipeline" {
+resource "aws_codepipeline" "codebuild_ansible_playbook_pipeline" {
   name     = "${var.project_name}-pipeline"
   role_arn = aws_iam_role.pipeline_role.arn
 
@@ -108,10 +111,11 @@ resource "aws_iam_role" "build_role" {
     name = "codebuild_policy"
 
     policy = templatefile(
-      "./templates/iam_policy/policy_build_packer.json.tpl", {
-        aws_account_id     = data.aws_caller_identity.current.account_id
-        artifacts_bucket   = var.artifacts_bucket
-        build_project_name = "${var.project_name}-build"
+      "./templates/iam_policy/policy_build_ansible.json.tpl", {
+        aws_account_id               = data.aws_caller_identity.current.account_id
+        artifacts_bucket             = var.artifacts_bucket
+        build_project_name           = "${var.project_name}-build"
+        ansible_playbook_bucket_name = var.ansible_playbook_bucket_name
     })
   }
 
@@ -144,7 +148,7 @@ resource "aws_iam_role" "pipeline_role" {
       "./templates/iam_policy/policy_pipeline.json.tpl", {
         aws_account_id       = data.aws_caller_identity.current.account_id
         artifacts_bucket     = var.artifacts_bucket
-        build_project_arn    = aws_codebuild_project.packer_build.arn
+        build_project_arn    = aws_codebuild_project.ansible_playbook_build.arn
         codecommit_repo_name = var.codecommit_repo_name
     })
   }
