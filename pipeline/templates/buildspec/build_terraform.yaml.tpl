@@ -17,4 +17,4 @@ phases:
       - "terraform init -input=false -no-color"
   build:
     commands:
-      - "terraform apply -input=false -no-color -auto-approve"
+      - "terraform apply -input=false -no-color"
