@@ -41,7 +41,7 @@ resource "aws_codebuild_project" "ansible_playbook_build" {
 }
 
 
-resource "aws_codepipeline" "codebuild_ansible_playbook_pipeline" {
+resource "aws_codepipeline" "ansible_playbook_pipeline" {
   name     = "${var.project_name}-pipeline"
   role_arn = aws_iam_role.pipeline_role.arn
 

@@ -47,7 +47,7 @@ resource "aws_codebuild_project" "serverless_framework_build" {
 }
 
 
-resource "aws_codepipeline" "codebuild_serverless_framework_pipeline" {
+resource "aws_codepipeline" "serverless_framework_pipeline" {
   name     = "${var.project_name}-pipeline"
   role_arn = aws_iam_role.pipeline_role.arn
 

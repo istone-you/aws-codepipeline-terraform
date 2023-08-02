@@ -38,7 +38,7 @@ resource "aws_codebuild_project" "packer_build" {
 }
 
 
-resource "aws_codepipeline" "codebuild_packer_deploy_pipeline" {
+resource "aws_codepipeline" "packer_pipeline" {
   name     = "${var.project_name}-pipeline"
   role_arn = aws_iam_role.pipeline_role.arn
 
