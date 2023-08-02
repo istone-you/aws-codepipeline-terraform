@@ -38,7 +38,7 @@ resource "aws_codebuild_project" "terraform_build" {
 }
 
 
-resource "aws_codepipeline" "codebuild_terraform_pipeline" {
+resource "aws_codepipeline" "terraform_pipeline" {
   name     = "${var.codecommit_repo_name}-pipeline"
   role_arn = aws_iam_role.pipeline_role.arn
 
@@ -86,6 +86,20 @@ resource "aws_codepipeline" "codebuild_terraform_pipeline" {
       run_order = 1
     }
   }
+}
+
+resource "aws_cloudwatch_event_rule" "event_rule" {
+  name = "${var.codecommit_repo_name}-rule"
+
+  event_pattern = templatefile("./templates/event_pattern/event_pattern.json.tpl", {
+    codecommit_arn : "arn:aws:codecommit:ap-northeast-1:${data.aws_caller_identity.current.account_id}:${var.codecommit_repo_name}"
+  })
+}
+
+resource "aws_cloudwatch_event_target" "event_target" {
+  rule     = aws_cloudwatch_event_rule.event_rule.name
+  arn      = aws_codepipeline.terraform_pipeline.arn
+  role_arn = aws_iam_role.event_role.arn
 }
 
 resource "aws_iam_role" "build_role" {
@@ -141,4 +155,22 @@ resource "aws_iam_role" "pipeline_role" {
   tags = {
     Name = "${var.codecommit_repo_name}-pipeline-role"
   }
+}
+
+resource "aws_iam_role" "event_role" {
+  name = "${var.codecommit_repo_name}-event-role"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action = "sts:AssumeRole"
+        Effect = "Allow"
+        Principal = {
+          Service = "events.amazonaws.com"
+        }
+      }
+    ]
+  })
+
+  managed_policy_arns = ["arn:aws:iam::aws:policy/AWSDataPipeline_FullAccess"]
 }
