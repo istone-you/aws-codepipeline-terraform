@@ -16,22 +16,14 @@ Systems Manager パラメータストアの**ACCESS_KEY_ID**と**SECRET_ACCESS_K
 
 ### pipeline_ansible
 
-CodeCommit リポジトリへのプッシュをトリガーに [Ansible Playbook](https://www.ansible.com/) の Zip ファイル S3 に作成する CodePipeline を作成するモジュールです。
-
-- ![ansible-pipeline.drawio.png](./image/ansible-pipeline.drawio.png)
-
-下記値を指定してください。
+CodeCommit リポジトリへのプッシュをトリガーに [Ansible Playbook](https://www.ansible.com/) の Zip ファイル S3 に作成する CodePipeline を作成するモジュールです。下記値を指定してください。
 
 - project_name = プロジェクト名
 - codecommit_repo_name = Ansible Playbook をプッシュしている CodeCommit のレポジトリ名
 
 ### pipeline_docker
 
-CodeCommit リポジトリへのプッシュをトリガーに [Docker](https://www.docker.com/) イメージを作成し、そのイメージを ECR にプッシュする CodePipeline を作成するモジュールです。
-
-- ![docker-pipeline.drawio.png](./image/docker-pipeline.drawio.png)
-
-下記値を指定してください。
+CodeCommit リポジトリへのプッシュをトリガーに [Docker](https://www.docker.com/) イメージを作成し、そのイメージを ECR にプッシュする CodePipeline を作成するモジュールです。下記値を指定してください。
 
 - project_name = プロジェクト名
 - codecommit_repo_name = Packer の実行ファイルをプッシュしている CodeCommit のレポジトリ名
@@ -52,21 +44,14 @@ CodeCommit リポジトリへのプッシュをトリガーに [Docker](https://
 
 ### pipeline_packer
 
-CodeCommit リポジトリへのプッシュをトリガーに [Pakcer](https://www.packer.io/) を実行する CodePipeline を作成するモジュールです。
-
-- ![packer-pipeline.drawio.png](./image/packer-pipeline.drawio.png)
-- 下記値を指定してください。
+CodeCommit リポジトリへのプッシュをトリガーに [Pakcer](https://www.packer.io/) を実行する CodePipeline を作成するモジュールです。下記値を指定してください。
 
 - project_name = プロジェクト名
 - codecommit_repo_name = CodeCommit のレポジトリ名
 
 ### pipeline_serverless
 
-CodeCommit リポジトリへのプッシュをトリガーに [Serverless Framework](https://www.serverless.com/) を実行する CodePipeline を作成するモジュールです。
-
-- ![serverless-pipeline.drawio.png](./image/serverless-pipeline.drawio.png)
-
-下記値を指定してください。
+CodeCommit リポジトリへのプッシュをトリガーに [Serverless Framework](https://www.serverless.com/) を実行する CodePipeline を作成するモジュールです。下記値を指定してください。
 
 - project_name = プロジェクト名
 - codecommit_repo_name = CodeCommit のレポジトリ名
@@ -87,11 +72,7 @@ CodeCommit リポジトリへのプッシュをトリガーに [Serverless Frame
 
 ### pipeline_file
 
-CodeCommit リポジトリへのプッシュをトリガーにファイルを S3 に作成する CodePipeline を作成するモジュールです。
-
-- ![file-pipeline.drawio.png](./image/file-pipeline.drawio.png)
-
-下記値を指定してください。
+CodeCommit リポジトリへのプッシュをトリガーにファイルを S3 に作成する CodePipeline を作成するモジュールです。下記値を指定してください。
 
 - project_name = プロジェクト名
 - codecommit_repo_name = CodeCommit のレポジトリ名
