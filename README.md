@@ -33,7 +33,7 @@ secret_key = "****************"
 
 各モジュールについて説明します。
 
-### pipeline_ansible
+### pipeline_terraform
 
 既出の pipeline ディレクトリとは別物です。aws-codepipeline-prod 以外の Terraform ファイル用の CodePipeline を作成するモジュールです。下記値を指定してください。
 
